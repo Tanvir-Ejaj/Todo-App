@@ -4,6 +4,7 @@ import { Button, Container, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { FaRegCopy, FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { BsSearch } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import {
   getDatabase,
@@ -14,6 +15,7 @@ import {
   set,
   update,
 } from "firebase/database";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Final = () => {
   let [info, setInfo] = useState({
@@ -29,30 +31,36 @@ const Final = () => {
   };
 
   const [error, setError] = useState("");
-  const validation = () => {
+  const validate = () => {
     if (!info.task) {
-      setError("Please Add A Task");
+      setError("Refresh again and Please Add A Task");
     }
   };
 
   // Write Data
 
   const db = getDatabase();
+
   const handleSubmit = () => {
-    set(push(ref(db, "TodoList/")), {
-      task: info.task,
-    }).then(() => {
-      setInfo({
-        task: "",
-      });
-      toast.success("Successful!", {
-        position: "bottom-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        theme: "dark",
-      });
-    });
+    validate();
+    if (!error && info.task.trim() !== "") {
+      set(
+        push(ref(db, "TodoList/"), {
+          task: info.task,
+        }).then(() => {
+          setInfo({
+            task: "",
+          });
+          toast.success("Successful!", {
+            position: "bottom-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            theme: "dark",
+          });
+        })
+      );
+    }
   };
 
   // Read All Data
@@ -105,6 +113,24 @@ const Final = () => {
         closeOnClick: true,
         theme: "dark",
       });
+      setShow(false);
+    });
+  };
+
+  // Search User
+
+  const [filterUser, setFilterUser] = useState([]);
+
+  const handleSearch = (e) => {
+    let array = [];
+    if (e.target.value.length === 0) {
+      setFilterUser([]);
+    }
+    todo.filter((item) => {
+      if (item.task.toLowerCase().includes(e.target.value.toLowerCase())) {
+        array.push(item);
+        setFilterUser(array);
+      }
     });
   };
 
@@ -162,25 +188,58 @@ const Final = () => {
               </div>
             </Grid>
           </Grid>
-          <Grid container justifyContent="center">
+          <Grid container justifyContent="end">
+            <Grid item xs={4}>
+              <div className="search_box">
+                <div className="search-wrapper">
+                  <div className="search-icon">
+                    <BsSearch />
+                  </div>
+                  <div className="search-input">
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      onChange={handleSearch}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Grid>
             <Grid item xs={12}>
               <div className="todo-box">
-                {todo.map((item) => (
-                  <>
-                    <div className="todo-inner">
-                      <div className="todo-text">
-                        <h6>{item.task}</h6>
+                {filterUser.length > 0
+                  ? filterUser.map((item, i) => (
+                      <div key={i} className="todo-inner">
+                        <div className="todo-text">
+                          <h6>{item.task}</h6>
+                        </div>
+                        <div className="todo-extra">
+                          <CopyToClipboard text={item.task}>
+                            <FaRegCopy />
+                          </CopyToClipboard>
+                          <FaEdit onClick={() => handleEdit(item)} />
+                          <RiDeleteBin6Line
+                            onClick={() => handleDelete(item.id)}
+                          />
+                        </div>
                       </div>
-                      <div className="todo-extra">
-                        <FaRegCopy />
-                        <FaEdit onClick={() => handleEdit(item)} />
-                        <RiDeleteBin6Line
-                          onClick={() => handleDelete(item.id)}
-                        />
+                    ))
+                  : todo.map((item, i) => (
+                      <div key={i} className="todo-inner">
+                        <div className="todo-text">
+                          <h6>{item.task}</h6>
+                        </div>
+                        <div className="todo-extra">
+                          <CopyToClipboard text={item.task}>
+                            <FaRegCopy />
+                          </CopyToClipboard>
+                          <FaEdit onClick={() => handleEdit(item)} />
+                          <RiDeleteBin6Line
+                            onClick={() => handleDelete(item.id)}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </>
-                ))}
+                    ))}
               </div>
             </Grid>
           </Grid>
