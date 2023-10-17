@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
-import { Button, Container, Grid } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import { FaRegCopy, FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsSearch } from "react-icons/bs";
@@ -16,8 +13,11 @@ import {
   update,
 } from "firebase/database";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
+import "./responsive.css";
 
-const Final = () => {
+const Todo = () => {
   let [info, setInfo] = useState({
     task: "",
   });
@@ -133,63 +133,43 @@ const Final = () => {
       }
     });
   };
-
   return (
     <>
       <div className="todo-main">
-        <Container fixed>
+        <div className="container">
           <ToastContainer />
-          <Grid container justifyContent="center">
-            <Grid item xs={4} textAlign="center">
+          <div className="row justify-content-center">
+            <div className="col-lg-4 text-center">
               <div className="todo-heading">
                 <h1>Todo App</h1>
               </div>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            spacing={2}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item xs={6}>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
               <div className="todo-search">
-                <TextField
+                <input
+                  type="text"
                   className="input"
-                  id="outlined-basic"
-                  label="Add Your Task"
-                  variant="outlined"
                   name="task"
                   onChange={handleChange}
                   value={info.task}
                 />
                 {error ? <p className="error-message">{error}</p> : ""}
-              </div>
-            </Grid>
-            <Grid item xs={2}>
-              <div className="todo-search">
                 {show ? (
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    onClick={handleUpdate}
-                  >
+                  <button type="submit" onClick={handleUpdate}>
                     Update
-                  </Button>
+                  </button>
                 ) : (
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Add
-                  </Button>
+                  <button type="submit" onClick={handleSubmit}>
+                    Update
+                  </button>
                 )}
               </div>
-            </Grid>
-          </Grid>
-          <Grid container justifyContent="end">
-            <Grid item xs={4}>
+            </div>
+          </div>
+          <div className="row justify-content-end">
+            <div className="col-lg-6">
               <div className="search_box">
                 <div className="search-wrapper">
                   <div className="search-icon">
@@ -204,49 +184,49 @@ const Final = () => {
                   </div>
                 </div>
               </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div className="todo-box">
-                {filterUser.length > 0
-                  ? filterUser.map((item, i) => (
-                      <div key={i} className="todo-inner">
-                        <div className="todo-text">
-                          <h6>{item.task}</h6>
-                        </div>
-                        <div className="todo-extra">
-                          <CopyToClipboard text={item.task}>
-                            <FaRegCopy />
-                          </CopyToClipboard>
-                          <FaEdit onClick={() => handleEdit(item)} />
-                          <RiDeleteBin6Line
-                            onClick={() => handleDelete(item.id)}
-                          />
-                        </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="todo-box">
+              {filterUser.length > 0
+                ? filterUser.map((item, i) => (
+                    <div key={i} className="todo-inner">
+                      <div className="todo-text">
+                        <h6>{item.task}</h6>
                       </div>
-                    ))
-                  : todo.map((item, i) => (
-                      <div key={i} className="todo-inner">
-                        <div className="todo-text">
-                          <h6>{item.task}</h6>
-                        </div>
-                        <div className="todo-extra">
-                          <CopyToClipboard text={item.task}>
-                            <FaRegCopy />
-                          </CopyToClipboard>
-                          <FaEdit onClick={() => handleEdit(item)} />
-                          <RiDeleteBin6Line
-                            onClick={() => handleDelete(item.id)}
-                          />
-                        </div>
+                      <div className="todo-extra">
+                        <CopyToClipboard text={item.task}>
+                          <FaRegCopy />
+                        </CopyToClipboard>
+                        <FaEdit onClick={() => handleEdit(item)} />
+                        <RiDeleteBin6Line
+                          onClick={() => handleDelete(item.id)}
+                        />
                       </div>
-                    ))}
-              </div>
-            </Grid>
-          </Grid>
-        </Container>
+                    </div>
+                  ))
+                : todo.map((item, i) => (
+                    <div key={i} className="todo-inner">
+                      <div className="todo-text">
+                        <h6>{item.task}</h6>
+                      </div>
+                      <div className="todo-extra">
+                        <CopyToClipboard text={item.task}>
+                          <FaRegCopy />
+                        </CopyToClipboard>
+                        <FaEdit onClick={() => handleEdit(item)} />
+                        <RiDeleteBin6Line
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
 };
 
-export default Final;
+export default Todo;

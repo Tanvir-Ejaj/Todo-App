@@ -1,5 +1,5 @@
 .todo-main{
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -19,33 +19,42 @@
   color: var(--text-color);
 }
 
+.todo-search{
+  position: relative;
+  background: rgba(239, 253, 255, 0.80);
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  justify-content: space-between;
+}
+
+.input{
+  width: 70%;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+  outline: 0;
+  border: 0;
+  background: transparent;
+}
+
 .todo-search button{
   background: var(--text-bg) !important;
   font-size: 22px;
   font-weight: 600;
   color: var(--text-color);
-  padding: 10px 0;
-  width: 100%;
+  padding: 10px 30px;
   text-transform: capitalize !important;
-}
-
-.todo-search{
-  position: relative;
-  padding-bottom: 20px;
-}
-
-.input{
-  width: 100%;
-  font-size: 24px;
-  font-weight: 600;
-  color: #000000;
+  margin-left: 30px;
+  border: 0;
+  outline: 0;
 }
 
 .todo-box{
   margin-top: 30px;
   background: #FFFFFF;
   padding: 50px;
-  height: 500px;
+  min-height: 500px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -106,4 +115,13 @@
   color: var(--text-color);
   outline: 0;
   border: 0;
+}
+
+
+.error-message{
+  color: red;
+  font-size: 18px;
+  position: absolute;
+  bottom: -40px;
+  left: 0;
 }
