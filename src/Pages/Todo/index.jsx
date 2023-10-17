@@ -162,7 +162,7 @@ const Todo = () => {
                   </button>
                 ) : (
                   <button type="submit" onClick={handleSubmit}>
-                    Update
+                    Add
                   </button>
                 )}
               </div>
