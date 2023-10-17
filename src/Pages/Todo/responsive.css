@@ -68,13 +68,35 @@
     margin: 0 10px;
   }
 
-  .todo-extra{
+  .todo-extra {
     display: flex;
     width: 40%;
     justify-content: center;
   }
 }
 
-@media(min-width: 576px) and (max-width: 767.98px){
-  
+@media (min-width: 768px) and (max-width: 991.99px) {
+  .search-wrapper {
+    margin-top: 45px;
+}
+
+  .todo-extra{
+    display: flex;
+    align-items: center;
+  }
+
+  .todo-extra svg {
+    margin: 0 20px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1299.98px) {
+
+  .todo-main{
+    padding: 50px 0;
+  }
+
+  .todo-heading h1 {
+    padding: 30px 90px;
+  }
 }

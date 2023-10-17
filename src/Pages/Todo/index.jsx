@@ -169,7 +169,7 @@ const Todo = () => {
             </div>
           </div>
           <div className="row justify-content-end">
-            <div className="col-lg-6">
+            <div className="col-md-8 col-lg-6">
               <div className="search_box">
                 <div className="search-wrapper">
                   <div className="search-icon">
@@ -187,40 +187,42 @@ const Todo = () => {
             </div>
           </div>
           <div className="row">
-            <div className="todo-box">
-              {filterUser.length > 0
-                ? filterUser.map((item, i) => (
-                    <div key={i} className="todo-inner">
-                      <div className="todo-text">
-                        <h6>{item.task}</h6>
+            <div className="col-lg-12">
+              <div className="todo-box">
+                {filterUser.length > 0
+                  ? filterUser.map((item, i) => (
+                      <div key={i} className="todo-inner">
+                        <div className="todo-text">
+                          <h6>{item.task}</h6>
+                        </div>
+                        <div className="todo-extra">
+                          <CopyToClipboard text={item.task}>
+                            <FaRegCopy />
+                          </CopyToClipboard>
+                          <FaEdit onClick={() => handleEdit(item)} />
+                          <RiDeleteBin6Line
+                            onClick={() => handleDelete(item.id)}
+                          />
+                        </div>
                       </div>
-                      <div className="todo-extra">
-                        <CopyToClipboard text={item.task}>
-                          <FaRegCopy />
-                        </CopyToClipboard>
-                        <FaEdit onClick={() => handleEdit(item)} />
-                        <RiDeleteBin6Line
-                          onClick={() => handleDelete(item.id)}
-                        />
+                    ))
+                  : todo.map((item, i) => (
+                      <div key={i} className="todo-inner">
+                        <div className="todo-text">
+                          <h6>{item.task}</h6>
+                        </div>
+                        <div className="todo-extra">
+                          <CopyToClipboard text={item.task}>
+                            <FaRegCopy />
+                          </CopyToClipboard>
+                          <FaEdit onClick={() => handleEdit(item)} />
+                          <RiDeleteBin6Line
+                            onClick={() => handleDelete(item.id)}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))
-                : todo.map((item, i) => (
-                    <div key={i} className="todo-inner">
-                      <div className="todo-text">
-                        <h6>{item.task}</h6>
-                      </div>
-                      <div className="todo-extra">
-                        <CopyToClipboard text={item.task}>
-                          <FaRegCopy />
-                        </CopyToClipboard>
-                        <FaEdit onClick={() => handleEdit(item)} />
-                        <RiDeleteBin6Line
-                          onClick={() => handleDelete(item.id)}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+              </div>
             </div>
           </div>
         </div>

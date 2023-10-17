@@ -54,7 +54,7 @@
   margin-top: 30px;
   background: #FFFFFF;
   padding: 50px;
-  min-height: 500px;
+  max-height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
